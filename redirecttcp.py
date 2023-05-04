@@ -35,7 +35,7 @@ class RedirectTCP(app_manager.RyuApp):
         match = parser.OFPMatch(
             eth_type=ether.ETH_TYPE_IP,
             ip_proto=inet.IPPROTO_TCP,
-            ipv4_dst='10.0.0.2',
+            ipv4_dst='10.10.1.2',
             tcp_dst=80,
         )
         actions = [
