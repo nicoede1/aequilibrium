@@ -6,7 +6,7 @@ from ryu.controller import ofp_event
 from ryu.controller.handler import (CONFIG_DISPATCHER, MAIN_DISPATCHER,
                                     set_ev_cls)
 from ryu.lib.packet import ipv4, packet, tcp
-from ryu.ofproto import ether, inet, ofproto_v1_5
+from ryu.ofproto import ether, inet, ofproto_v1_3
 from webob import Response
 
 from utils import add_flow, mark_processed
@@ -17,7 +17,7 @@ url = '/redirecttcp'
 
 
 class RedirectTCP(app_manager.RyuApp):
-    OFP_VERSIONS = [ofproto_v1_5.OFP_VERSION]
+    OFP_VERSIONS = [ofproto_v1_3.OFP_VERSION]
     _CONTEXTS = {'wsgi': WSGIApplication}
 
     def __init__(self, *args, **kwargs):
