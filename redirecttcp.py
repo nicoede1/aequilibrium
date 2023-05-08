@@ -69,7 +69,7 @@ class RedirectTCP(app_manager.RyuApp):
             )
             if self.redirects:
                 actions = [
-                    parser.OFPActionSetField(eth_dst='02:2d:90:1a:3c:ee'),
+                    parser.OFPActionSetField(eth_dst='02:2c:22:c0:cf:f0'),
                     parser.OFPActionSetField(ipv4_dst='10.10.1.3'),
                     parser.OFPActionOutput(3),
                 ]
@@ -89,7 +89,7 @@ class RedirectTCP(app_manager.RyuApp):
                     tcp_dst=tcp_pkt.src_port,
                 )
                 actions_return = [
-                    parser.OFPActionSetField(eth_src='02:ad:49:ef:09:88'),
+                    parser.OFPActionSetField(eth_src='02:fc:a1:b5:a6:96'),
                     parser.OFPActionSetField(ipv4_src='10.10.1.2'),
                     parser.OFPActionOutput(in_port),
                 ]
