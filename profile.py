@@ -72,10 +72,13 @@ link_5.addInterface(iface2)
 link_5.addInterface(iface3)
 
 # Install and execute a script that is contained in the repository.
-node_h1.addService(rspec.Execute(shell="/bin/sh", command="sudo apt update"))
-node_h2.addService(rspec.Execute(shell="/bin/sh", command="sudo apt update"))
-node_h3.addService(rspec.Execute(shell="/bin/sh", command="sudo apt update"))
+node_h1.addService(rspec.Execute(shell="/bin/sh", command="sudo apt -y update"))
+node_h2.addService(rspec.Execute(shell="/bin/sh", command="sudo apt -y update"))
+node_h3.addService(rspec.Execute(shell="/bin/sh", command="sudo apt -y update"))
 node_h1.addService(rspec.Execute(shell="/bin/sh", command="sudo apt install -y apache2"))
+node_h1.addService(rspec.Execute(shell="/bin/sh", command="git clone https://github.com/pari685/AStream"))
+node_h1.addService(rspec.Execute(shell="/bin/sh", command="wget https://nyu.box.com/shared/static/d6btpwf5lqmkqh53b52ynhmfthh2qtby.tgz -O media.tgz"))
+node_h1.addService(rspec.Execute(shell="/bin/sh", command="sudo tar -v -xzf media.tgz -C /var/www/html/"))
 
 # Print the generated rspec
 pc.printRequestRSpec(request)
