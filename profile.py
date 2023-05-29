@@ -11,7 +11,7 @@ Test"""
 # Import the Portal object.
 import geni.portal as portal
 # Import the ProtoGENI library.
-import geni.rspec.pg as pg
+import geni.rspec.pg as rspec
 
 # Create a portal object,
 pc = portal.Context()
