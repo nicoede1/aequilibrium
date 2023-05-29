@@ -27,7 +27,7 @@ node_ryu.disk_image = 'urn:publicid:IDN+emulab.net+image+emulab-ops//UBUNTU22-64
 
 # Node ovs
 node_ovs = request.XenVM('ovs')
-node_ovs.routable_control_ip = True
+node_ovs.routable_control_ip = False
 node_ovs.Site('Site 2')
 node_ovs.disk_image = 'urn:publicid:IDN+emulab.net+image+emulab-ops//UBUNTU22-64-STD'
 iface0 = node_ovs.addInterface('interface-6')
@@ -36,21 +36,21 @@ iface2 = node_ovs.addInterface('interface-10')
 
 # Node h1
 node_h1 = request.XenVM('h1')
-node_h1.routable_control_ip = True
+node_h1.routable_control_ip = False
 node_h1.Site('Site 2')
 node_h1.disk_image = 'urn:publicid:IDN+emulab.net+image+emulab-ops//UBUNTU22-64-STD'
 iface3 = node_h1.addInterface('interface-11')
 
 # Node h3
 node_h3 = request.XenVM('h3')
-node_h3.routable_control_ip = True
+node_h3.routable_control_ip = False
 node_h3.Site('Site 2')
 node_h3.disk_image = 'urn:publicid:IDN+emulab.net+image+emulab-ops//UBUNTU22-64-STD'
 iface4 = node_h3.addInterface('interface-7')
 
 # Node h2
 node_h2 = request.XenVM('h2')
-node_h2.routable_control_ip = True
+node_h2.routable_control_ip = False
 node_h2.Site('Site 2')
 node_h2.disk_image = 'urn:publicid:IDN+emulab.net+image+emulab-ops//UBUNTU22-64-STD'
 iface5 = node_h2.addInterface('interface-9')
@@ -78,9 +78,8 @@ node_h1.addService(rspec.Execute(shell="/bin/sh", command="sudo apt -y update"))
 node_h2.addService(rspec.Execute(shell="/bin/sh", command="sudo apt -y update"))
 node_h3.addService(rspec.Execute(shell="/bin/sh", command="sudo apt -y update"))
 node_h1.addService(rspec.Execute(shell="/bin/sh", command="sudo apt install -y apache2"))
-node_h1.addService(rspec.Execute(shell="/bin/sh", command="git clone https://github.com/pari685/AStream"))
-node_h1.addService(rspec.Execute(shell="/bin/sh", command="wget https://nyu.box.com/shared/static/d6btpwf5lqmkqh53b52ynhmfthh2qtby.tgz -O media.tgz"))
-node_h1.addService(rspec.Execute(shell="/bin/sh", command="sudo tar -v -xzf media.tgz -C /var/www/html/"))
+node_h2.addService(rspec.Execute(shell="/bin/sh", command="sudo apt install -y apache2"))
+node_h3.addService(rspec.Execute(shell="/bin/sh", command="sudo apt install -y apache2"))
 
 # Print the generated rspec
 pc.printRequestRSpec(request)
