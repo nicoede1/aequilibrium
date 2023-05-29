@@ -22,6 +22,7 @@ request = pc.makeRequestRSpec()
 # Node ryu
 node_ryu = request.XenVM('ryu')
 node_ryu.routable_control_ip = True
+node_ryu.Site('Site 1')
 
 # Node ovs
 node_ovs = request.XenVM('ovs')
