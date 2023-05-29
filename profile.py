@@ -75,7 +75,7 @@ link_5.addInterface(iface3)
 node_h1.addService(rspec.Execute(shell="/bin/sh", command="sudo apt update"))
 node_h2.addService(rspec.Execute(shell="/bin/sh", command="sudo apt update"))
 node_h3.addService(rspec.Execute(shell="/bin/sh", command="sudo apt update"))
-node_h1.addService(rspec.Execute(shell="/bin/sh", command="sudo apt install gedit"))
+node_h1.addService(rspec.Execute(shell="/bin/sh", command="sudo apt install -y apache2"))
 
 # Print the generated rspec
 pc.printRequestRSpec(request)
