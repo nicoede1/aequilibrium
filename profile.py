@@ -23,11 +23,13 @@ request = pc.makeRequestRSpec()
 node_ryu = request.XenVM('ryu')
 node_ryu.routable_control_ip = True
 node_ryu.Site('Site 1')
+node_ryu.disk_image = '"urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU18-64-STD"'
 
 # Node ovs
 node_ovs = request.XenVM('ovs')
 node_ovs.routable_control_ip = True
 node_ovs.Site('Site 2')
+node_ovs.disk_image = '"urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU18-64-STD"'
 iface0 = node_ovs.addInterface('interface-6')
 iface1 = node_ovs.addInterface('interface-8')
 iface2 = node_ovs.addInterface('interface-10')
@@ -36,21 +38,21 @@ iface2 = node_ovs.addInterface('interface-10')
 node_h1 = request.XenVM('h1')
 node_h1.routable_control_ip = True
 node_h1.Site('Site 2')
-node_h1.disk_image = 'urn:publicid:IDN+emulab.net+image+emulab-ops//UBUNTU22-64-STD'
+node_h1.disk_image = '"urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU18-64-STD"'
 iface3 = node_h1.addInterface('interface-11')
 
 # Node h3
 node_h3 = request.XenVM('h3')
 node_h3.routable_control_ip = True
 node_h3.Site('Site 2')
-node_h3.disk_image = 'urn:publicid:IDN+emulab.net+image+emulab-ops//UBUNTU22-64-STD'
+node_h3.disk_image = '"urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU18-64-STD"'
 iface4 = node_h3.addInterface('interface-7')
 
 # Node h2
 node_h2 = request.XenVM('h2')
 node_h2.routable_control_ip = True
 node_h2.Site('Site 2')
-node_h2.disk_image = 'urn:publicid:IDN+emulab.net+image+emulab-ops//UBUNTU22-64-STD'
+node_h2.disk_image = '"urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU18-64-STD"'
 iface5 = node_h2.addInterface('interface-9')
 
 # Link link-3
