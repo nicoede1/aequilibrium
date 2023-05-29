@@ -74,6 +74,13 @@ link_5.addInterface(iface2)
 link_5.addInterface(iface3)
 
 # Install and execute a script that is contained in the repository.
+node_ryu.addService(rspec.Execute(shell="/bin/sh", command="sudo apt -y update"))
+node_ryu.addService(rspec.Execute(shell="/bin/sh", command="sudo apt-get install python-pip python-dev -y"))
+node_ryu.addService(rspec.Execute(shell="/bin/sh", command="sudo update-alternatives --install /usr/bin/python python /usr/bin/python3 1"))
+node_ryu.addService(rspec.Execute(shell="/bin/sh", command="sudo apt install python3-ryu"))
+node_ovs.addService(rspec.Execute(shell="/bin/sh", command="sudo apt -y update"))
+node_ovs.addService(rspec.Execute(shell="/bin/sh", command="sudo apt install openvswitch-switch"))
+node_ovs.addService(rspec.Execute(shell="/bin/sh", command="sudo apt -y update"))
 node_h1.addService(rspec.Execute(shell="/bin/sh", command="sudo apt -y update"))
 node_h2.addService(rspec.Execute(shell="/bin/sh", command="sudo apt -y update"))
 node_h3.addService(rspec.Execute(shell="/bin/sh", command="sudo apt -y update"))
