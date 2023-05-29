@@ -80,7 +80,6 @@ node_ryu.addService(rspec.Execute(shell="/bin/sh", command="sudo update-alternat
 node_ryu.addService(rspec.Execute(shell="/bin/sh", command="sudo apt install python3-ryu"))
 node_ovs.addService(rspec.Execute(shell="/bin/sh", command="sudo apt -y update"))
 node_ovs.addService(rspec.Execute(shell="/bin/sh", command="sudo apt install openvswitch-switch"))
-node_ovs.addService(rspec.Execute(shell="/bin/sh", command="sudo apt -y update"))
 node_h1.addService(rspec.Execute(shell="/bin/sh", command="sudo apt -y update"))
 node_h2.addService(rspec.Execute(shell="/bin/sh", command="sudo apt -y update"))
 node_h3.addService(rspec.Execute(shell="/bin/sh", command="sudo apt -y update"))
