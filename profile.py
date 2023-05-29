@@ -72,9 +72,9 @@ link_5.addInterface(iface2)
 link_5.addInterface(iface3)
 
 # Install and execute a script that is contained in the repository.
-node_h1.addService(pg.Execute(shell="sh", command="/local/repository/client.sh"))
-node_h2.addService(pg.Execute(shell="sh", command="/local/repository/client.sh"))
-node_h3.addService(pg.Execute(shell="sh", command="/local/repository/client.sh"))
+node_h1.addService(pg.Execute(shell="sh", command="/local/repository/silly.sh"))
+node_h2.addService(pg.Execute(shell="sh", command="/local/repository/silly.sh"))
+node_h3.addService(pg.Execute(shell="sh", command="/local/repository/silly.sh"))
 
 # Print the generated rspec
 pc.printRequestRSpec(request)
