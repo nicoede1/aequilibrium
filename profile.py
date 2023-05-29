@@ -12,8 +12,6 @@ Test"""
 import geni.portal as portal
 # Import the ProtoGENI library.
 import geni.rspec.pg as pg
-# Import the Emulab specific extensions.
-import geni.rspec.emulab as emulab
 
 # Create a portal object,
 pc = portal.Context()
@@ -23,7 +21,6 @@ request = pc.makeRequestRSpec()
 
 # Node ryu
 node_ryu = request.XenVM('ryu')
-node_ryu.Site('Site 1')
 node_ryu.routable_control_ip = True
 
 # Node ovs
@@ -38,21 +35,18 @@ iface2 = node_ovs.addInterface('interface-10')
 node_h1 = request.XenVM('h1')
 node_h1.routable_control_ip = True
 node_h1.Site('Site 2')
-node_h1.addService(pg.Execute(shell="sh", command="/local/repository/client.sh"))
 iface3 = node_h1.addInterface('interface-11')
 
 # Node h3
 node_h3 = request.XenVM('h3')
 node_h3.routable_control_ip = True
 node_h3.Site('Site 2')
-node_h3.addService(pg.Execute(shell="sh", command="/local/repository/client.sh"))
 iface4 = node_h3.addInterface('interface-7')
 
 # Node h2
 node_h2 = request.XenVM('h2')
 node_h2.routable_control_ip = True
 node_h2.Site('Site 2')
-node_h2.addService(pg.Execute(shell="sh", command="/local/repository/client.sh"))
 iface5 = node_h2.addInterface('interface-9')
 
 # Link link-3
@@ -73,6 +67,10 @@ link_5.Site('undefined')
 link_5.addInterface(iface2)
 link_5.addInterface(iface3)
 
+# Install and execute a script that is contained in the repository.
+node_h1.addService(pg.Execute(shell="sh", command="/local/repository/client.sh"))
+node_h2.addService(pg.Execute(shell="sh", command="/local/repository/client.sh"))
+node_h3.addService(pg.Execute(shell="sh", command="/local/repository/client.sh"))
 
 # Print the generated rspec
 pc.printRequestRSpec(request)
