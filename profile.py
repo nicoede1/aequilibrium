@@ -86,9 +86,9 @@ node_h3.addService(rspec.Execute(shell="/bin/sh", command="sudo apt -y update"))
 node_h1.addService(rspec.Execute(shell="/bin/sh", command="sudo apt install -y apache2"))
 node_h2.addService(rspec.Execute(shell="/bin/sh", command="sudo apt install -y apache2"))
 node_h3.addService(rspec.Execute(shell="/bin/sh", command="sudo apt install -y apache2"))
-node_h1.addService(rspec.Execute(shell="/bin/sh", command="git clone https://github.com/pari685/AStream "))
-node_h2.addService(rspec.Execute(shell="/bin/sh", command="git clone https://github.com/pari685/AStream "))
-node_h3.addService(rspec.Execute(shell="/bin/sh", command="git clone https://github.com/pari685/AStream "))
+node_h1.addService(rspec.Execute(shell="/bin/sh", command="sudo git clone https://github.com/pari685/AStream"))
+node_h2.addService(rspec.Execute(shell="/bin/sh", command="sudo git clone https://github.com/pari685/AStream"))
+node_h3.addService(rspec.Execute(shell="/bin/sh", command="sudo git clone https://github.com/pari685/AStream"))
 
 # Print the generated rspec
 pc.printRequestRSpec(request)
