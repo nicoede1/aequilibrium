@@ -71,7 +71,7 @@ class RedirectTCP(app_manager.RyuApp):
                 actions = [
                     parser.OFPActionSetField(eth_dst='02:b4:d8:68:8b:3b'),
                     parser.OFPActionSetField(ipv4_dst='10.10.1.3'),
-                    parser.OFPActionOutput(2),
+                    parser.OFPActionOutput(3),
                 ]
             else:
                 actions = [
