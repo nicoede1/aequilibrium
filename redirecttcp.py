@@ -19,7 +19,11 @@ class SimpleLoadBalancer(app_manager.RyuApp):
 
         # Install the flow rules to redirect packets
         match = parser.OFPMatch(eth_type=0x0800, ip_proto=6, tcp_dst=80, ipv4_dst='10.10.1.2')
-        actions = [parser.OFPActionSetField(ipv4_dst='10.10.1.3'), parser.OFPActionOutput(ofproto.OFPP_NORMAL)]
+        actions = [
+            parser.OFPActionSetField(ipv4_dst='10.10.1.3'),
+            parser.OFPActionSetField(ipv4_src='10.10.1.3'),
+            parser.OFPActionOutput(ofproto.OFPP_NORMAL)
+        ]
         self.add_flow(datapath, 100, match, actions)
 
     def add_flow(self, datapath, priority, match, actions):
