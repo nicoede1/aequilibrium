@@ -59,12 +59,9 @@ class RedirectTCP(app_manager.RyuApp):
             self.logger.info('--> HTTP ip=%r port=%r, in_port=%r, ip_dst=%r, tcp_dst=%r', ip_pkt.src, tcp_pkt.src_port, in_port, ip_pkt.dst, tcp_pkt.dst_port)
 
             match = parser.OFPMatch(
-                in_port=in_port,
                 eth_type=ether.ETH_TYPE_IP,
                 ip_proto=inet.IPPROTO_TCP,
-                ipv4_src=ip_pkt.src,
                 ipv4_dst=ip_pkt.dst,
-                tcp_src=tcp_pkt.src_port,
                 tcp_dst=tcp_pkt.dst_port,
             )
             if self.redirects:
