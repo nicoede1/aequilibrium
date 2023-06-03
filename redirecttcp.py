@@ -41,7 +41,7 @@ class RedirectTCP(app_manager.RyuApp):
         actions = [
             parser.OFPActionOutput(ofproto.OFPP_CONTROLLER, ofproto.OFPCML_NO_BUFFER),
         ]
-        add_flow(datapath, 1, match, actions)
+        add_flow(datapath, 2, match, actions)
 
     @set_ev_cls(ofp_event.EventOFPPacketIn, MAIN_DISPATCHER)
     def packet_in_handler(self, ev):
@@ -56,7 +56,7 @@ class RedirectTCP(app_manager.RyuApp):
         tcp_pkt = pkt.get_protocol(tcp.tcp)
 
         if ip_pkt and ip_pkt.dst == '10.10.1.2' and tcp_pkt and tcp_pkt.dst_port == 80:
-            self.logger.info('--> HTTP ip=%r port=%r', ip_pkt.src, tcp_pkt.src_port)
+            self.logger.info('--> HTTP ip=%r port=%r, in_port=%r', ip_pkt.src, tcp_pkt.src_port, in_port)
 
             match = parser.OFPMatch(
                 in_port=in_port,
