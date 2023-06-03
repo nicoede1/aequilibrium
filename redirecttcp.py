@@ -56,10 +56,11 @@ class RedirectTCP(app_manager.RyuApp):
         tcp_pkt = pkt.get_protocol(tcp.tcp)
 
         if ip_pkt and ip_pkt.dst == '10.10.1.2' and tcp_pkt and tcp_pkt.dst_port == 80:
-            self.logger.info('--> HTTP ip=%r port=%r, eth_type=%r, ip_proto=%r', ip_pkt.src, tcp_pkt.src_port, ether.ETH_TYPE_IP, inet.IPPROTO_TCP)
+            self.logger.info('--> HTTP ip=%r port=%r, in_port=%r', ip_pkt.src, tcp_pkt.src_port, in_port)
             
             if self.redirects:
                 match = parser.OFPMatch(
+                    in_port=in_port,
                     eth_type=ether.ETH_TYPE_IP,
                     ip_proto=inet.IPPROTO_TCP,
                     ipv4_src=ip_pkt.src,
@@ -75,11 +76,12 @@ class RedirectTCP(app_manager.RyuApp):
                 ]
             else:
                 actions = [
-                    parser.OFPActionOutput(2),
+                    parser.OFPActionOutput(1),
                 ]
 
             if self.redirects:
                 match_return = parser.OFPMatch(
+                    in_port=3,
                     eth_type=ether.ETH_TYPE_IP,
                     ip_proto=inet.IPPROTO_TCP,
                     ipv4_src='10.10.1.3',
@@ -94,6 +96,7 @@ class RedirectTCP(app_manager.RyuApp):
                 ]
             else:
                 match_return = parser.OFPMatch(
+                    in_port=1,
                     eth_type=ether.ETH_TYPE_IP,
                     ip_proto=inet.IPPROTO_TCP,
                     ipv4_src=ip_pkt.dst,
