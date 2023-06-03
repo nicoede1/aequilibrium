@@ -107,8 +107,8 @@ class RedirectTCP(app_manager.RyuApp):
                     parser.OFPActionOutput(in_port),
                 ]
 
-            add_flow(datapath, 2, match, actions, idle_timeout=20)
-            add_flow(datapath, 3, match_return, actions_return, idle_timeout=20)
+            add_flow(datapath, 3, match, actions, idle_timeout=20)
+            add_flow(datapath, 2, match_return, actions_return, idle_timeout=20)
 
             out = parser.OFPPacketOut(
                 datapath=datapath,
