@@ -35,7 +35,7 @@ class RedirectTCP(app_manager.RyuApp):
         match = parser.OFPMatch(
             eth_type=ether.ETH_TYPE_IP,
             ip_proto=inet.IPPROTO_TCP,
-            ipv4_dst='128.110.223.3',
+            ipv4_dst='10.10.1.2',
             tcp_dst=80,
         )
         actions = [
@@ -49,18 +49,13 @@ class RedirectTCP(app_manager.RyuApp):
         datapath = msg.datapath
         ofproto = datapath.ofproto
         parser = datapath.ofproto_parser
-        
-        connection = datapath.socket.getpeername()
-        public_ip = connection[0]
-        
-        self.logger.info('--> public_ip=%r', public_ip)
 
         in_port = msg.match['in_port']
         pkt = packet.Packet(msg.data)
         ip_pkt = pkt.get_protocol(ipv4.ipv4)
         tcp_pkt = pkt.get_protocol(tcp.tcp)
 
-        if ip_pkt and ip_pkt.dst == '128.110.223.3' and tcp_pkt and tcp_pkt.dst_port == 80:
+        if ip_pkt and ip_pkt.dst == '10.10.1.2' and tcp_pkt and tcp_pkt.dst_port == 80:
             self.logger.info('--> HTTP ip=%r port=%r, in_port=%r', ip_pkt.src, tcp_pkt.src_port, in_port)
             
             if self.redirects:
@@ -96,7 +91,7 @@ class RedirectTCP(app_manager.RyuApp):
                 )
                 actions_return = [
                     parser.OFPActionSetField(eth_src='02:22:b9:04:38:aa'),
-                    parser.OFPActionSetField(ipv4_src='128.110.223.3'),
+                    parser.OFPActionSetField(ipv4_src='10.10.1.2'),
                     parser.OFPActionOutput(in_port),
                 ]
             else:
