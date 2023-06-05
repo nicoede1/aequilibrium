@@ -49,6 +49,11 @@ class RedirectTCP(app_manager.RyuApp):
         datapath = msg.datapath
         ofproto = datapath.ofproto
         parser = datapath.ofproto_parser
+        
+        connection = datapath.socket.getpeername()
+        public_ip = connection[0]
+        
+        self.logger.info('--> public_ip=%r', public_ip)
 
         in_port = msg.match['in_port']
         pkt = packet.Packet(msg.data)
