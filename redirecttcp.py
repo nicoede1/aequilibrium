@@ -76,7 +76,7 @@ class RedirectTCP(app_manager.RyuApp):
                 ]
             else:
                 actions = [
-                    parser.OFPActionOutput(2),
+                    parser.OFPActionOutput(3),
                 ]
 
             if self.redirects:
@@ -96,7 +96,7 @@ class RedirectTCP(app_manager.RyuApp):
                 ]
             else:
                 match_return = parser.OFPMatch(
-                    in_port=2,
+                    in_port=3,
                     eth_type=ether.ETH_TYPE_IP,
                     ip_proto=inet.IPPROTO_TCP,
                     ipv4_src=ip_pkt.dst,
