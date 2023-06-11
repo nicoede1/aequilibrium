@@ -70,15 +70,15 @@ class RedirectTCP(app_manager.RyuApp):
        
 
         if throughput_1 >= throughput_2:
-        	server = '10.10.1.3'
-        	server_bad = '10.10.1.2'
-        	mac_bad = '02:2a:a0:91:63:5b'
-        	mac = '02:ed:17:29:c6:ed'
+            server = '10.10.1.3'
+            server_bad = '10.10.1.2'
+            mac_bad = '02:2a:a0:91:63:5b'
+            mac = '02:ed:17:29:c6:ed'
         elif throughput_1 < throughput_2:
-	    	server = '10.10.1.2'
-	    	server_bad = '10.10.1.3'
-	    	mac_bad = '02:ed:17:29:c6:ed'
-	    	mac = '02:2a:a0:91:63:5b'
+            server = '10.10.1.2'
+            server_bad = '10.10.1.3'
+            mac_bad = '02:ed:17:29:c6:ed'
+            mac = '02:2a:a0:91:63:5b'
 
         if ip_pkt and ip_pkt.dst == server_bad and tcp_pkt and tcp_pkt.dst_port == 80:
             self.logger.info('--> HTTP ip=%r port=%r', ip_pkt.src, tcp_pkt.src_port)
