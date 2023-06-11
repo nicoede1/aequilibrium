@@ -20,6 +20,8 @@ def finish_connection(ev):
         origin_lst = ['02:ed:17:29:c6:ed', '10.10.1.3', 2]
     else:
         origin_lst = ['02:2a:a0:91:63:5b', '10.10.1.2', 3]
+        
+    print('pkt_tcp: ', pkt_tcp)
 
     #identify the seq and ack number
 	n_seq = pkt_tcp.seq
