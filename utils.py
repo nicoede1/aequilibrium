@@ -53,8 +53,9 @@ def server_status(url):
     cn.close()
 
     eita = raw.splitlines()
-    load = float(eita[22].split(': ')[1])
-    return load
+    tput = str(eita[21]).split(': ')[1]
+    tput = tput.split("'")[0]
+    return float(tput)
 
 def recv_message(conn):
     while True:
