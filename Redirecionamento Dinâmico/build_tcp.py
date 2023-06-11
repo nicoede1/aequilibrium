@@ -17,7 +17,7 @@ def finish_connection(ev):
     pkt_tcp = pkt.get_protocol(tcp.tcp)
 
     if pkt_ip.dst == '10.10.1.2':
-        origin_lst = ['02:ed:17:29:c6:ed', '10.10.1.3', 3]
+        origin_lst = ['02:ed:17:29:c6:ed', '10.10.1.3', 2]
     else:
         origin_lst = ['02:2a:a0:91:63:5b', '10.10.1.2', 3]
 
