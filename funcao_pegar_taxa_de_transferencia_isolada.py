@@ -15,8 +15,8 @@ def server_status(url):
     tput = tput.split("'")[0]
     return float(tput)
 
-load_1, throughput_1 = server_status('172.17.199.3')
-load_2, throughput_2 = server_status('172.17.199.4')
+throughput_1 = server_status('172.17.199.3')
+throughput_2 = server_status('172.17.199.4')
 
 print("tput 2: ", throughput_1)
 print("tput 3: ", throughput_2)
