@@ -1,4 +1,3 @@
-#!/usr/bin/python -tt
 # Copyright (C) 2011 pkt_ippon Telegraph and Telephone Corporation.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
