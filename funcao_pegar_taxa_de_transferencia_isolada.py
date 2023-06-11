@@ -1,4 +1,4 @@
-import httplib
+import http.client as httplib
 
 def server_status(url):
     cn = httplib.HTTPConnection(url)
@@ -11,14 +11,12 @@ def server_status(url):
     cn.close()
 
     eita = raw.splitlines()
-    load = float(eita[19].split(': ')[1])
-    tput = float(eita[22].split(': ')[1])
-    return load, tput
+    tput = str(eita[21]).split(': ')[1]
+    tput = tput.split("'")[0]
+    return float(tput)
 
-load_1, throughput_1 = server_status('10.10.1.2')
-load_2, throughput_2 = server_status('10.10.1.3')
+throughput_1 = server_status('10.10.1.2')
+throughput_2 = server_status('10.10.1.3')
 
 print("tput 2: ", throughput_1)
-print("load 2: ", load_1)
 print("tput 3: ", throughput_2)
-print("load 3: ", load_2)
