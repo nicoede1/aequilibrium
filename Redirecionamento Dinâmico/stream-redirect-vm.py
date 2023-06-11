@@ -167,7 +167,7 @@ class StreamRedirect(app_manager.RyuApp):
                         parser.OFPActionOutput(in_port),
                     ]
                 
-                self.add_flow(datapath, 3, match, actions, idle_timeout=10)
+                self.add_flow(datapath, 2, match, actions, idle_timeout=10)
                 self.add_flow(datapath, 3, match_return, actions_return, idle_timeout=10)
 
                 out = parser.OFPPacketOut(
@@ -323,14 +323,14 @@ class StreamRedirect(app_manager.RyuApp):
             mac_bad = self.origin1[0]
 
         # remove: origin - client flow
-        match = parser.OFPMatch(eth_dst=src, in_port=1, eth_type=ether.ETH_TYPE_IP, ip_proto=inet.IPPROTO_TCP, tcp_src=80)
+        match = parser.OFPMatch(eth_dst=src, in_port=2, eth_type=ether.ETH_TYPE_IP, ip_proto=inet.IPPROTO_TCP, tcp_src=80)
         mod = parser.OFPFlowMod(datapath=datapath, command=ofproto.OFPFC_DELETE,
                                 out_port=ofproto.OFPP_ANY, out_group=ofproto.OFPG_ANY,
                                 match=match)
         datapath.send_msg(mod)
 
         # remove: client - origin flow
-        match = parser.OFPMatch(eth_src=src, in_port=2, eth_type=ether.ETH_TYPE_IP, ip_proto=inet.IPPROTO_TCP, tcp_dst=80)
+        match = parser.OFPMatch(eth_src=src, in_port=3, eth_type=ether.ETH_TYPE_IP, ip_proto=inet.IPPROTO_TCP, tcp_dst=80)
         mod = parser.OFPFlowMod(datapath=datapath, command=ofproto.OFPFC_DELETE,
                                 out_port=ofproto.OFPP_ANY, out_group=ofproto.OFPG_ANY,
                                 match=match)
