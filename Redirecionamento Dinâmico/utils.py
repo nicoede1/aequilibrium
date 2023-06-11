@@ -44,6 +44,8 @@ def server_status(url):
     cpu = float(cpu.split("'")[0])
     load = str(eita[21]).split(': ')[1]
     load = float(load.split("'")[0])
+    if cpu == 0:
+        cpu = 0.01
     total = load + (1/cpu) #returns the formula specified tput + 1/cpu usage
     return total
 
