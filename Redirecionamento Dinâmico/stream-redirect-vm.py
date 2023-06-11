@@ -216,7 +216,7 @@ class StreamRedirect(app_manager.RyuApp):
                 redirect_flag = redirect_flag + 1
 
         if in_port != 1:
-            self.logger.info("Packet in %s %s %s %s | %s", dpid, src, dst, in_port, datetime.datetime.now())
+            self.logger.info("Packet in %s %s %s %s | %s **** %s ****", dpid, src, dst, in_port, datetime.datetime.now(), tempo)
 
         # learn a mac address to avoid FLOOD next time.
         self.mac_to_port[dpid][src] = in_port
@@ -270,12 +270,12 @@ class StreamRedirect(app_manager.RyuApp):
             self.logger.info('--> HTTP ip=%r port=%r', ip_pkt.src, tcp_pkt.src_port)
             if ip_pkt.dst == '10.10.1.2':
                 original_ipv = self.origin2[1]
-                original_ether = '01:00:5e:7f:ff:fa'
+                original_ether = '02:2a:a0:91:63:5b'
                 redirect_ipv = self.origin1[1]
                 redirect_ether = self.origin1[0]
             if ip_pkt.dst == '10.10.1.3':
                 original_ipv = self.origin1[1]
-                original_ether = '01:00:5e:7f:ff:fa'
+                original_ether = '02:ed:17:29:c6:ed'
                 redirect_ipv = self.origin2[1]
                 redirect_ether = self.origin2[0]
 
