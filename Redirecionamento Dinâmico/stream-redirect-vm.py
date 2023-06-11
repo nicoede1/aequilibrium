@@ -45,7 +45,7 @@ class StreamRedirect(app_manager.RyuApp):
         self.redirects = True
         self.mac_to_port = {}
         self.origin1 = ['02:ed:17:29:c6:ed', '10.10.1.3', '2']  # ether, ip , port sdn
-        self.origin2 = ['02:2a:a0:91:63:5b', '10.10.1.2', '2']
+        self.origin2 = ['02:2a:a0:91:63:5b', '10.10.1.2', '3']
         
 
     @set_ev_cls(ofp_event.EventOFPSwitchFeatures, CONFIG_DISPATCHER)
@@ -167,7 +167,7 @@ class StreamRedirect(app_manager.RyuApp):
                         parser.OFPActionOutput(in_port),
                     ]
                 
-                self.add_flow(datapath, 2, match, actions, idle_timeout=10)
+                self.add_flow(datapath, 3, match, actions, idle_timeout=10)
                 self.add_flow(datapath, 3, match_return, actions_return, idle_timeout=10)
 
                 out = parser.OFPPacketOut(
@@ -283,7 +283,7 @@ class StreamRedirect(app_manager.RyuApp):
             match = parser.OFPMatch(in_port=in_port, eth_dst=dst, eth_src=src, eth_type=ether.ETH_TYPE_IP,
                                     ip_proto=inet.IPPROTO_TCP, tcp_dst=80)
 
-            new_port = int(2)
+            new_port = int(3)
             actions = []
             actions.append(parser.OFPActionSetField(ipv4_dst=redirect_ipv))
             actions.append(parser.OFPActionSetField(eth_dst=redirect_ether))
