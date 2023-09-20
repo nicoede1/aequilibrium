@@ -35,7 +35,7 @@ class RedirectTCP(app_manager.RyuApp):
         match = parser.OFPMatch(
             eth_type=ether.ETH_TYPE_IP,
             ip_proto=inet.IPPROTO_TCP,
-            ipv4_dst='10.10.1.2',
+            ipv4_dst='192.168.1.5',
             tcp_dst=80,
         )
         actions = [
@@ -55,7 +55,7 @@ class RedirectTCP(app_manager.RyuApp):
         ip_pkt = pkt.get_protocol(ipv4.ipv4)
         tcp_pkt = pkt.get_protocol(tcp.tcp)
 
-        if ip_pkt and ip_pkt.dst == '10.10.1.2' and tcp_pkt and tcp_pkt.dst_port == 80:
+        if ip_pkt and ip_pkt.dst == '192.168.1.5' and tcp_pkt and tcp_pkt.dst_port == 80:
             self.logger.info('--> HTTP ip=%r port=%r, in_port=%r', ip_pkt.src, tcp_pkt.src_port, in_port)
             
             if self.redirects:
@@ -70,33 +70,33 @@ class RedirectTCP(app_manager.RyuApp):
                 )
             
                 actions = [
-                    parser.OFPActionSetField(eth_dst='02:ed:17:29:c6:ed'),
-                    parser.OFPActionSetField(ipv4_dst='10.10.1.3'),
-                    parser.OFPActionOutput(2),
+                    parser.OFPActionSetField(eth_dst='02:c7:bb:7d:3a:05'),
+                    parser.OFPActionSetField(ipv4_dst='192.168.1.7'),
+                    parser.OFPActionOutput(3),
                 ]
             else:
                 actions = [
-                    parser.OFPActionOutput(3),
+                    parser.OFPActionOutput(1),
                 ]
 
             if self.redirects:
                 match_return = parser.OFPMatch(
-                    in_port=2,
+                    in_port=3,
                     eth_type=ether.ETH_TYPE_IP,
                     ip_proto=inet.IPPROTO_TCP,
-                    ipv4_src='10.10.1.3',
+                    ipv4_src='192.168.1.7',
                     ipv4_dst=ip_pkt.src,
                     tcp_src=tcp_pkt.dst_port,
                     tcp_dst=tcp_pkt.src_port,
                 )
                 actions_return = [
-                    parser.OFPActionSetField(eth_src='02:2a:a0:91:63:5b'),
-                    parser.OFPActionSetField(ipv4_src='10.10.1.2'),
+                    parser.OFPActionSetField(eth_src='02:a2:45:be:83:6e'),
+                    parser.OFPActionSetField(ipv4_src='192.168.1.5'),
                     parser.OFPActionOutput(in_port),
                 ]
             else:
                 match_return = parser.OFPMatch(
-                    in_port=3,
+                    in_port=1,
                     eth_type=ether.ETH_TYPE_IP,
                     ip_proto=inet.IPPROTO_TCP,
                     ipv4_src=ip_pkt.dst,
