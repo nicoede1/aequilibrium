@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 import requests
 import fileinput
-import httplib
+import http.client as httplib
 
 
 def add_flow(datapath, priority, match, actions, idle_timeout=0, hard_timeout=0):
