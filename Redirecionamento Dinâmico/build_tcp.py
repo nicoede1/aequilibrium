@@ -16,10 +16,10 @@ def finish_connection(ev):
     pkt_ip = pkt.get_protocol(ipv4.ipv4)
     pkt_tcp = pkt.get_protocol(tcp.tcp)
 
-    if pkt_ip.dst == '10.10.1.2':
-        origin_lst = ['02:ed:17:29:c6:ed', '10.10.1.3', 2]
+    if pkt_ip.dst == '192.168.1.14':
+        origin_lst = ['02:28:fc:fd:ee:1b', '192.168.1.3', 2]
     else:
-        origin_lst = ['02:2a:a0:91:63:5b', '10.10.1.2', 3]
+        origin_lst = ['02:54:2d:77:5d:2d', '192.168.1.14', 3]
         
     print('pkt_tcp: ', pkt_tcp)
 
