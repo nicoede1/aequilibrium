@@ -1,3 +1,17 @@
+# Copyright (C) 2011 pkt_ippon Telegraph and Telephone Corporation.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#    http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
+# implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
 
 import requests
 import fileinput
@@ -18,8 +32,8 @@ from utils import server_status, mark_processed
 #variables initiation
 redirect_flag = 0 #This variable will be the trigger to redirect or not
 need_to_redirect_flag = 0 #This variable will hold wheter there is the need to redirect or not
-throughput_1 = server_status('192.168.1.14')
-throughput_2 = server_status('192.168.1.3')
+throughput_1 = server_status('192.168.1.3')
+throughput_2 = server_status('192.168.1.14')
 start = timer() #Timer usage to execute certain functions withouth the use of threads
 
 
@@ -30,8 +44,8 @@ class StreamRedirect(app_manager.RyuApp):
         super(StreamRedirect, self).__init__(*args, **kwargs)
         self.redirects = True
         self.mac_to_port = {}
-        self.origin1 = ['02:54:2d:77:5d:2d', '192.168.1.14', '3']  # ether, ip , port sdn
-        self.origin2 = ['02:28:fc:fd:ee:1b', '192.168.1.3', '7']
+        self.origin1 = ['02:28:fc:fd:ee:1b', '192.168.1.3', '3']  # ether, ip , port sdn
+        self.origin2 = ['02:54:2d:77:5d:2d', '192.168.1.14', '7']
         
 
     @set_ev_cls(ofp_event.EventOFPSwitchFeatures, CONFIG_DISPATCHER)
@@ -44,7 +58,7 @@ class StreamRedirect(app_manager.RyuApp):
         match = parser.OFPMatch(
             eth_type=ether.ETH_TYPE_IP,
             ip_proto=inet.IPPROTO_TCP,
-            ipv4_dst='192.168.1.14',
+            ipv4_dst='192.168.1.3',
             tcp_dst=80,
         )
         actions = [
@@ -55,7 +69,7 @@ class StreamRedirect(app_manager.RyuApp):
         match = parser.OFPMatch(
             eth_type=ether.ETH_TYPE_IP,
             ip_proto=inet.IPPROTO_TCP,
-            ipv4_dst='192.168.1.3',
+            ipv4_dst='192.168.1.14',
             tcp_dst=80,
         )
         actions = [
@@ -109,15 +123,15 @@ class StreamRedirect(app_manager.RyuApp):
         if redirect_flag == 0:
             #First time connection verification
             if throughput_1 > throughput_2:
-                server = '192.168.1.3'
-                server_bad = '192.168.1.14'
-                mac = '02:28:fc:fd:ee:1b'
-                mac_bad = '02:54:2d:77:5d:2d'
-            else:
                 server = '192.168.1.14'
                 server_bad = '192.168.1.3'
                 mac = '02:54:2d:77:5d:2d'
                 mac_bad = '02:28:fc:fd:ee:1b'
+            else:
+                server = '192.168.1.3'
+                server_bad = '192.168.1.14'
+                mac = '02:28:fc:fd:ee:1b'
+                mac_bad = '02:54:2d:77:5d:2d'
 
             if pkt_ip and pkt_ip.dst == server_bad and pkt_tcp and pkt_tcp.dst_port == 80:
 
@@ -178,22 +192,22 @@ class StreamRedirect(app_manager.RyuApp):
             need_to_redirect_flag = 1
             start = timer()
 
-            throughput_1 = server_status('192.168.1.14')
-            throughput_2 = server_status('192.168.1.3')
+            throughput_1 = server_status('192.168.1.3')
+            throughput_2 = server_status('192.168.1.14')
 
         if pkt_ip:
             if need_to_redirect_flag == 1:
-                if (throughput_1 > throughput_2) and pkt_ip.dst == '192.168.1.3': #If throughput1 is higher but the destination is the same server do not redirect
+                if (throughput_1 > throughput_2) and pkt_ip.dst == '192.168.1.14': #If throughput1 is higher but the destination is the same server do not redirect
                     trash = 0
                 else:
                     redirect_flag = redirect_flag + 1 #Redirect otherwise
 
-                if (throughput_2 > throughput_1) and pkt_ip.dst == '192.168.1.14':
+                if (throughput_2 > throughput_1) and pkt_ip.dst == '192.168.1.3':
                     trash = 0
                 else:
                     redirect_flag = redirect_flag + 1
 
-            if redirect_flag > 1 and (pkt_ip.dst == '192.168.1.3' or pkt_ip.dst == '192.168.1.14'):
+            if redirect_flag > 1 and (pkt_ip.dst == '192.168.1.14' or pkt_ip.dst == '192.168.1.3'):
                 self.logger.info('The redirect process has started')
                 self._del_tcp_flow(datapath, ofproto, parser, in_port, pkt_eth, pkt_ip, pkt_tcp)
                 btcp.finish_connection(ev)
@@ -254,14 +268,14 @@ class StreamRedirect(app_manager.RyuApp):
 
         if ip_pkt and tcp_pkt and tcp_pkt.dst_port == 80:
             self.logger.info('--> HTTP ip=%r port=%r', ip_pkt.src, tcp_pkt.src_port)
-            if ip_pkt.dst == '192.168.1.3':
+            if ip_pkt.dst == '192.168.1.14':
                 original_ipv = self.origin2[1]
-                original_ether = '02:28:fc:fd:ee:1b'
+                original_ether = '02:54:2d:77:5d:2d'
                 redirect_ipv = self.origin1[1]
                 redirect_ether = self.origin1[0]
-            if ip_pkt.dst == '192.168.1.14':
+            if ip_pkt.dst == '192.168.1.3':
                 original_ipv = self.origin1[1]
-                original_ether = '02:54:2d:77:5d:2d'
+                original_ether = '02:28:fc:fd:ee:1b'
                 redirect_ipv = self.origin2[1]
                 redirect_ether = self.origin2[0]
 
@@ -301,7 +315,7 @@ class StreamRedirect(app_manager.RyuApp):
         dst = pkt_eth.dst
         dpid = datapath.id
 
-        if pkt_ip.dst == '192.168.1.3':
+        if pkt_ip.dst == '192.168.1.14':
             server_bad = self.origin2[1]
             mac_bad = self.origin2[0]
         else:
