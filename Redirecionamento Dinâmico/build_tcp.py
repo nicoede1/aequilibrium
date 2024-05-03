@@ -17,9 +17,9 @@ def finish_connection(ev):
     pkt_tcp = pkt.get_protocol(tcp.tcp)
 
     if pkt_ip.dst == '192.168.1.14':
-        origin_lst = ['02:28:fc:fd:ee:1b', '192.168.1.3', 2]
+        origin_lst = ['02:28:fc:fd:ee:1b', '192.168.1.3', 3]
     else:
-        origin_lst = ['02:54:2d:77:5d:2d', '192.168.1.14', 3]
+        origin_lst = ['02:54:2d:77:5d:2d', '192.168.1.14', 7]
         
     print('pkt_tcp: ', pkt_tcp)
 
