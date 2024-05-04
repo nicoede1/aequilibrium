@@ -44,8 +44,8 @@ class StreamRedirect(app_manager.RyuApp):
         super(StreamRedirect, self).__init__(*args, **kwargs)
         self.redirects = True
         self.mac_to_port = {}
-        self.origin1 = ['02:28:fc:fd:ee:1b', '192.168.1.3', '3']  # ether, ip , port sdn
-        self.origin2 = ['02:54:2d:77:5d:2d', '192.168.1.14', '7']
+        self.origin1 = ['02:96:be:46:9d:88', '192.168.1.3', '2']  # ether, ip , port sdn
+        self.origin2 = ['02:b7:db:1b:a2:e5', '192.168.1.14', '6']
         
 
     @set_ev_cls(ofp_event.EventOFPSwitchFeatures, CONFIG_DISPATCHER)
@@ -125,13 +125,13 @@ class StreamRedirect(app_manager.RyuApp):
             if throughput_1 > throughput_2:
                 server = '192.168.1.14'
                 server_bad = '192.168.1.3'
-                mac = '02:54:2d:77:5d:2d'
-                mac_bad = '02:28:fc:fd:ee:1b'
+                mac = '02:b7:db:1b:a2:e5'
+                mac_bad = '02:96:be:46:9d:88'
             else:
                 server = '192.168.1.3'
                 server_bad = '192.168.1.14'
-                mac = '02:28:fc:fd:ee:1b'
-                mac_bad = '02:54:2d:77:5d:2d'
+                mac = '02:96:be:46:9d:88'
+                mac_bad = '02:b7:db:1b:a2:e5'
 
             if pkt_ip and pkt_ip.dst == server_bad and pkt_tcp and pkt_tcp.dst_port == 80:
 
@@ -270,12 +270,12 @@ class StreamRedirect(app_manager.RyuApp):
             self.logger.info('--> HTTP ip=%r port=%r', ip_pkt.src, tcp_pkt.src_port)
             if ip_pkt.dst == '192.168.1.14':
                 original_ipv = self.origin2[1]
-                original_ether = '02:54:2d:77:5d:2d'
+                original_ether = '02:b7:db:1b:a2:e5'
                 redirect_ipv = self.origin1[1]
                 redirect_ether = self.origin1[0]
             if ip_pkt.dst == '192.168.1.3':
                 original_ipv = self.origin1[1]
-                original_ether = '02:28:fc:fd:ee:1b'
+                original_ether = '02:96:be:46:9d:88'
                 redirect_ipv = self.origin2[1]
                 redirect_ether = self.origin2[0]
 
