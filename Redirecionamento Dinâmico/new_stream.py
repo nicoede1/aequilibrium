@@ -31,8 +31,8 @@ class StreamRedirect(app_manager.RyuApp):
         super(StreamRedirect, self).__init__(*args, **kwargs)
         self.redirects = True
         self.mac_to_port = {}
-        self.origin2 = ['02:54:2d:77:5d:2d', '192.168.1.14', '7']  # ether, ip , port sdn
-        self.origin1 = ['02:28:fc:fd:ee:1b', '192.168.1.3', '3']
+        self.origin2 = ['02:b7:db:1b:a2:e5', '192.168.1.14', '2']  # ether, ip , port sdn
+        self.origin1 = ['02:96:be:46:9d:88', '192.168.1.3', '6']
 
     @set_ev_cls(ofp_event.EventOFPSwitchFeatures, CONFIG_DISPATCHER)
     def switch_features_handler(self, ev):
@@ -116,16 +116,16 @@ class StreamRedirect(app_manager.RyuApp):
                 server = '192.168.1.14'
                 server_bad = '192.168.1.3'
                 port_bad = self.origin1[2]
-                mac = '02:54:2d:77:5d:2d'
-                mac_bad = '02:28:fc:fd:ee:1b'
+                mac = '02:b7:db:1b:a2:e5'
+                mac_bad = '02:96:be:46:9d:88'
                 port = self.origin2[2]
             else:
                 server = '192.168.1.3'
                 port = self.origin1[2]
                 server_bad = '192.168.1.14'
-                mac = '02:28:fc:fd:ee:1b'
+                mac = '02:96:be:46:9d:88'
                 port_bad = self.origin1[2]
-                mac_bad = '02:54:2d:77:5d:2d'
+                mac_bad = '02:b7:db:1b:a2:e5'
 
             if pkt_ip and pkt_ip.dst == server_bad and pkt_tcp and pkt_tcp.dst_port == 80:
 
@@ -142,7 +142,7 @@ class StreamRedirect(app_manager.RyuApp):
                     actions = [
                         parser.OFPActionSetField(eth_dst=mac),
                         parser.OFPActionSetField(ipv4_dst=server),
-                        parser.OFPActionOutput(2),
+                        parser.OFPActionOutput(6),
                     ]
 
                 if self.redirects:
@@ -341,7 +341,7 @@ class StreamRedirect(app_manager.RyuApp):
 
         # remove: client - origin flow
         match = parser.OFPMatch(
-            eth_src=src, in_port=3, eth_type=ether.ETH_TYPE_IP, ip_proto=inet.IPPROTO_TCP, tcp_dst=80)
+            eth_src=src, in_port=1, eth_type=ether.ETH_TYPE_IP, ip_proto=inet.IPPROTO_TCP, tcp_dst=80)
         mod = parser.OFPFlowMod(datapath=datapath, command=ofproto.OFPFC_DELETE,
                                 out_port=ofproto.OFPP_ANY, out_group=ofproto.OFPG_ANY,
                                 match=match)
