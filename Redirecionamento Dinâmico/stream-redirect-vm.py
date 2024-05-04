@@ -32,8 +32,8 @@ from utils import server_status, mark_processed
 #variables initiation
 redirect_flag = 0 #This variable will be the trigger to redirect or not
 need_to_redirect_flag = 0 #This variable will hold wheter there is the need to redirect or not
-throughput_1 = server_status('192.168.1.3')
-throughput_2 = server_status('192.168.1.14')
+throughput_1 = server_status('172.17.128.2')
+throughput_2 = server_status('172.17.128.3')
 start = timer() #Timer usage to execute certain functions withouth the use of threads
 
 
@@ -192,8 +192,8 @@ class StreamRedirect(app_manager.RyuApp):
             need_to_redirect_flag = 1
             start = timer()
 
-            throughput_1 = server_status('192.168.1.3')
-            throughput_2 = server_status('192.168.1.14')
+            throughput_1 = server_status('172.17.128.2')
+            throughput_2 = server_status('172.17.128.3')
 
         if pkt_ip:
             if need_to_redirect_flag == 1:
