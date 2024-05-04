@@ -112,7 +112,7 @@ class StreamRedirect(app_manager.RyuApp):
 
         if redirect_flag == 0:
             # First time connection verification
-[B            if throughput_1 > throughput_2:
+            if throughput_1 > throughput_2:
                 server = '192.168.1.14'
                 server_bad = '192.168.1.3'
                 port_bad = self.origin1[2]
@@ -220,7 +220,7 @@ class StreamRedirect(app_manager.RyuApp):
         # learn a mac address to avoid FLOOD next time.
         self.mac_to_port[dpid][src] = in_port
 
-  [B      if dst in self.mac_to_port[dpid]:
+        if dst in self.mac_to_port[dpid]:
             out_port = self.mac_to_port[dpid][dst]
         else:
             out_port = ofproto.OFPP_FLOOD
